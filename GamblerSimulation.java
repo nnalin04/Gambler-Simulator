@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.Scanner;
 
 class GamblerSimulation {
 
@@ -11,9 +12,31 @@ class GamblerSimulation {
     static int minBetAmount = STAKE - (STAKE * 50 / 100);
 
     public static void main(String[] args) {
+
         // calling a function to calculate and print the gambling result till the given
         // number of days.
-        calculatingGambleResults();
+        int gambleResult = calculatingGambleResults();
+        repeatingGamble(gambleResult);
+
+        if (gambleResult <= 15) {
+            System.out.println("Sorry you went in loss or you didn't profit");
+            System.out.println("Can't continue");
+        }
+    }
+
+    private static void repeatingGamble(int gambleResult) {
+        Scanner sc = new Scanner(System.in);
+        if (gambleResult > 15) {
+            System.out.println("Would you like to continue to gamble");
+            System.out.println("true / false");
+            boolean userWish = sc.nextBoolean();
+            if (userWish) {
+                repeatingGamble(calculatingGambleResults());
+            } else {
+                System.out.println("Thanks for gambling with us.");
+            }
+        }
+        sc.close();
     }
 
     // function to calculate the total amount after investing.
@@ -25,8 +48,10 @@ class GamblerSimulation {
     public static void printingAfter20Days(int numOfDaysGambled, int numOfDaysWon, int numOfDaysLost) {
         // displaying the won and lost amount after 20 days.
         if (numOfDaysGambled >= 20) {
-            System.out.println("Total amount won after " + numOfDaysGambled + " days: " + totalCalculation(numOfDaysWon, 50, 0));
-            System.out.println("Total amount lost after " + numOfDaysGambled + " days: "+ totalCalculation(numOfDaysLost, 50, 0) + "\n");
+            System.out.println(
+                    "Total amount won after " + numOfDaysGambled + " days: " + totalCalculation(numOfDaysWon, 50, 0));
+            System.out.println("Total amount lost after " + numOfDaysGambled + " days: "
+                    + totalCalculation(numOfDaysLost, 50, 0) + "\n");
         }
     }
 
@@ -38,7 +63,7 @@ class GamblerSimulation {
     }
 
     // creating a function to calculate the accounts for given number of days.
-    public static void calculatingGambleResults() {
+    public static int calculatingGambleResults() {
         // counter for number of days
         int numOfDaysGambled = 0;
 
@@ -100,9 +125,11 @@ class GamblerSimulation {
         // printing the number of days won or lost and result after 30 day gamble.
         System.out.println("Number of days won: " + numOfDaysWon);
         System.out.println("Number of days lost: " + numOfDaysLost);
-        System.out.println("current Balance available: "+ (totalCalculation(numOfDaysWon, 50, 100) + totalCalculation(numOfDaysLost, 50, 0)));
+        System.out.println("current Balance available: "
+                + (totalCalculation(numOfDaysWon, 50, 100) + totalCalculation(numOfDaysLost, 50, 0)));
         System.out.println("day with max win: " + dayWithMaxWin + "th day");
-        System.out.println("day with max loss: " + dayWithMaxLoss + "th day");
+        System.out.println("day with max loss: " + dayWithMaxLoss + "th day" + "\n");
+        return numOfDaysWon;
 
     }
 }
