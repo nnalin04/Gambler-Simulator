@@ -8,18 +8,25 @@ class GamblerSimulation {
     // every bet is of 1$
     final static int bet = 1;
 
-    static int currentBalence = stake;
-
     public static void main(String[] args) {
         System.out.println("stake: " + stake);
         System.out.println("bet: " + bet);
+        int currentBalence = stake;
 
-        // calling the function within the if statement
-        if (winOrLoose() == 1) {
-            currentBalence += bet;
-        } else {
-            currentBalence -= bet;
+        int winPresentageAmount = stake + (stake * 50 / 100);
+        int lostPresentageAmount = stake - (stake * 50 / 100);
+
+        while (winPresentageAmount > currentBalence && currentBalence > lostPresentageAmount) {
+
+            // calling the function within the if statement
+            if (winOrLoose() == 1) {
+                currentBalence += bet;
+            } else {
+                currentBalence -= bet;
+            }
+
         }
+
         System.out.println("current Balence avliable: " + currentBalence);
 
     }
