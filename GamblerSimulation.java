@@ -9,25 +9,66 @@ class GamblerSimulation {
     final static int bet = 1;
 
     public static void main(String[] args) {
-        System.out.println("stake: " + stake);
-        System.out.println("bet: " + bet);
-        int currentBalence = stake;
 
-        int winPresentageAmount = stake + (stake * 50 / 100);
-        int lostPresentageAmount = stake - (stake * 50 / 100);
+        // counter for number of days
+        int numOfDaysGambled = 0;
 
-        while (winPresentageAmount > currentBalence && currentBalence > lostPresentageAmount) {
+        // counter for calculating the total amount won
+        int totalAmountWon = 0;
 
-            // calling the function within the if statement
-            if (winOrLoose() == 1) {
-                currentBalence += bet;
+        // counter for calculating the total amount lost
+        int totalAmountLost = 0;
+
+        // the amount gained or lost after every day gamble
+        int totalBalence = 0;
+
+        // calculating the number of days
+        while (numOfDaysGambled < 30) {
+
+            // counting the number of days
+            numOfDaysGambled++;
+
+            // calculate the amount per gamble gamble
+            int currentBalence = stake;
+
+            // calculating when to stop in case of winning
+            int winPresentageAmount = stake + (stake * 50 / 100);
+
+            // calculating when to stop in case of loosing
+            int lostPresentageAmount = stake - (stake * 50 / 100);
+
+            // comparing to win persentage or loss persentage with every gamble
+            while (winPresentageAmount > currentBalence && currentBalence > lostPresentageAmount) {
+
+                // calling the function within the if statement
+                if (winOrLoose() == 1) {
+                    currentBalence += bet;
+                } else {
+                    currentBalence -= bet;
+                }
+
+            }
+
+            if (currentBalence == winPresentageAmount) {
+                totalBalence += 100 + currentBalence;
+                totalAmountWon += 50;
             } else {
-                currentBalence -= bet;
+                totalBalence += currentBalence;
+                totalAmountLost += 50;
+            }
+
+            // displaying the won and lost ammount after 20 days
+            if (numOfDaysGambled == 20) {
+                System.out.println("Total amount won after 20 days: " + totalAmountWon);
+                System.out.println("Total amount lost after 20 days: " + totalAmountLost);
             }
 
         }
 
-        System.out.println("current Balence avliable: " + currentBalence);
+        // printing the stake, bet and result after 30 day gamble
+        System.out.println("stake: " + stake);
+        System.out.println("bet: " + bet);
+        System.out.println("current Balence avliable: " + totalBalence);
 
     }
 
