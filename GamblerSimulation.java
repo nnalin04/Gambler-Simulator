@@ -23,7 +23,8 @@ class GamblerSimulation {
             System.out.println("Can't continue");
         }
     }
-
+    
+    //function to check if the user want to repeat.
     private static void repeatingGamble(int gambleResult) {
         Scanner sc = new Scanner(System.in);
         if (gambleResult > 15) {
