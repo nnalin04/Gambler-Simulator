@@ -2,81 +2,83 @@ import java.util.Random;
 
 class GamblerSimulation {
 
-    // betting 100$ for every time
-    final static int stake = 100;
-
-    // every bet is of 1$
-    final static int bet = 1;
+    // Declaring class variable stake & bet
+    final static int STAKE = 100;
+    final static int BET = 1;
+    
+    // calculating when to stop in case of winning or loosing
+    static int maxBetAmount = STAKE + (STAKE * 50 / 100);
+    static int minBetAmount = STAKE - (STAKE * 50 / 100);
 
     public static void main(String[] args) {
+        // calling a function to calculate and print the gambling result till the given number of days
+        calculatingGambleResults();
+    }
 
+    //creating a function to calculate the accounts for given number of days
+    public static void calculatingGambleResults() {
         // counter for number of days
         int numOfDaysGambled = 0;
 
-        // counter for calculating the total amount won
-        int totalAmountWon = 0;
-
-        // counter for calculating the total amount lost
-        int totalAmountLost = 0;
-
-        // the amount gained or lost after every day gamble
-        int totalBalence = 0;
+        // counter for calculating the total amount won or lost
+        int numOfDaysWon = 0;
+        int numOfDaysLost = 0;
 
         // calculating the number of days
         while (numOfDaysGambled < 30) {
-
-            // counting the number of days
             numOfDaysGambled++;
 
-            // calculate the amount per gamble gamble
-            int currentBalence = stake;
+            // calling a function to calculate the result of gambling perDay
+            int currentBalance = returnsOfGamblingPerDay(maxBetAmount, minBetAmount);
 
-            // calculating when to stop in case of winning
-            int winPresentageAmount = stake + (stake * 50 / 100);
-
-            // calculating when to stop in case of loosing
-            int lostPresentageAmount = stake - (stake * 50 / 100);
-
-            // comparing to win persentage or loss persentage with every gamble
-            while (winPresentageAmount > currentBalence && currentBalence > lostPresentageAmount) {
-
-                // calling the function within the if statement
-                if (winOrLoose() == 1) {
-                    currentBalence += bet;
-                } else {
-                    currentBalence -= bet;
-                }
-
-            }
-
-            if (currentBalence == winPresentageAmount) {
-                totalBalence += 100 + currentBalence;
-                totalAmountWon += 50;
+            if (currentBalance == maxBetAmount) {
+                numOfDaysWon++;
             } else {
-                totalBalence += currentBalence;
-                totalAmountLost += 50;
+                numOfDaysLost++;
             }
-
-            // displaying the won and lost ammount after 20 days
-            if (numOfDaysGambled == 20) {
-                System.out.println("Total amount won after 20 days: " + totalAmountWon);
-                System.out.println("Total amount lost after 20 days: " + totalAmountLost);
-            }
-
+            //calling a function for printing after 20 days of gambling
+            printingAfter20Days(numOfDaysGambled,numOfDaysWon,numOfDaysLost);
         }
 
-        // printing the stake, bet and result after 30 day gamble
-        System.out.println("stake: " + stake);
-        System.out.println("bet: " + bet);
-        System.out.println("current Balence avliable: " + totalBalence);
+        // printing the number of days won or lost and result after 30 day gamble
+        System.out.println("Number of days won: " + numOfDaysWon);
+        System.out.println("Number of days lost: " + numOfDaysLost);
+        System.out.println("current Balance available: "+ (totalCalculation(numOfDaysWon, 50, 100) + totalCalculation(numOfDaysLost, 50, 0)));
+    }
 
+    //function to calculate the total amount after investing
+    public static int totalCalculation(int noOfDays, int ProfitOrLoss, int currentBalance) {
+        return noOfDays * (currentBalance + ProfitOrLoss);
+    }
+
+    //function to calculate the returns of gambling per day
+    public static int returnsOfGamblingPerDay(int maxBetAmount, int minBetAmount) {
+        // calculate the amount per gamble gamble
+        int currentBalance = STAKE;
+        while (maxBetAmount > currentBalance && currentBalance > minBetAmount) {
+            // calling the function within the if statement
+            if (gambling() == true) {
+                currentBalance += BET;
+            } else {
+                currentBalance -= BET;
+            }
+        }
+        return currentBalance;
+    }
+    
+    //function to print the per day gambling result after 20 days
+    public static void printingAfter20Days(int numOfDaysGambled, int numOfDaysWon, int numOfDaysLost){
+        // displaying the won and lost amount after 20 days
+        if (numOfDaysGambled >= 20) {
+            System.out.println("Total amount won after " + numOfDaysGambled + " days: "+ totalCalculation(numOfDaysWon, 50, 0));
+            System.out.println("Total amount lost after " + numOfDaysGambled + " days: "+totalCalculation(numOfDaysLost, 50, 0) + "\n");
+        }
     }
 
     // creating a function to decide the gamble result
-    public static int winOrLoose() {
+    public static boolean gambling() {
         Random r = new Random();
-        int result = r.nextInt(2);
+        boolean result = r.nextBoolean();
         return result;
     }
-
 }
