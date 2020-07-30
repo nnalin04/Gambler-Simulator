@@ -23,7 +23,7 @@ class GamblerSimulation {
             System.out.println("Can't continue");
         }
     }
-    
+
     //function to check if the user want to repeat.
     private static void repeatingGamble(int gambleResult) {
         Scanner sc = new Scanner(System.in);
@@ -49,10 +49,8 @@ class GamblerSimulation {
     public static void printingAfter20Days(int numOfDaysGambled, int numOfDaysWon, int numOfDaysLost) {
         // displaying the won and lost amount after 20 days.
         if (numOfDaysGambled >= 20) {
-            System.out.println(
-                    "Total amount won after " + numOfDaysGambled + " days: " + totalCalculation(numOfDaysWon, 50, 0));
-            System.out.println("Total amount lost after " + numOfDaysGambled + " days: "
-                    + totalCalculation(numOfDaysLost, 50, 0) + "\n");
+            System.out.println("Total amount won after " + numOfDaysGambled + " days: " + totalCalculation(numOfDaysWon, 50, 0));
+            System.out.println("Total amount lost after " + numOfDaysGambled + " days: "+ totalCalculation(numOfDaysLost, 50, 0) + "\n");
         }
     }
 
@@ -126,8 +124,7 @@ class GamblerSimulation {
         // printing the number of days won or lost and result after 30 day gamble.
         System.out.println("Number of days won: " + numOfDaysWon);
         System.out.println("Number of days lost: " + numOfDaysLost);
-        System.out.println("current Balance available: "
-                + (totalCalculation(numOfDaysWon, 50, 100) + totalCalculation(numOfDaysLost, 50, 0)));
+        System.out.println("current Balance available: "+ (totalCalculation(numOfDaysWon, 50, 100) + totalCalculation(numOfDaysLost, 50, 0)));
         System.out.println("day with max win: " + dayWithMaxWin + "th day");
         System.out.println("day with max loss: " + dayWithMaxLoss + "th day" + "\n");
         return numOfDaysWon;
