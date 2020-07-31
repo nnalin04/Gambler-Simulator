@@ -25,7 +25,7 @@ class GamblerSimulation {
     }
 
     //function to check if the user want to repeat.
-    private static void repeatingGamble(int gambleResult) {
+    public static void repeatingGamble(int gambleResult) {
         Scanner sc = new Scanner(System.in);
         if (gambleResult > 15) {
             System.out.println("Would you like to continue to gamble");
